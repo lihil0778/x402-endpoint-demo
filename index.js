@@ -149,7 +149,7 @@ const testPaymentMiddleware = paymentMiddleware(
   // Paywall configuration (optional)
   {
     appName: "x402Bscan",
-    appLogo: "/favicon.svg",
+    appLogo: "/logo.svg",
   }
 );
 
