@@ -81,7 +81,7 @@ app.get("/public", (req, res) => {
     success: true,
     message: "This is a public endpoint, no payment required",
     info: {
-      protectedEndpoint: "/test",
+      protectedEndpoint: "/mint",
       requiredPayment: `${PAYMENT_AMOUNT} ${TOKEN_SYMBOL} (smallest unit)`,
       network: NETWORK_NAME,
       tokenAddress: TOKEN_ADDRESS,
@@ -119,7 +119,7 @@ app.all("/health", (req, res) => {
 const testPaymentMiddleware = paymentMiddleware(
   PAYMENT_ADDRESS,
   {
-    "/test": {
+    "/mint": {
       price: {
         amount: PAYMENT_AMOUNT,
         asset: {
@@ -134,7 +134,7 @@ const testPaymentMiddleware = paymentMiddleware(
       },
       network: NETWORK,
       config: {
-        description: `Test access - ${PAYMENT_AMOUNT} ${TOKEN_SYMBOL}`,
+        description: `Official mint! Pay 20 USD1, mint 1 NFTs`,
         mimeType: "application/json",
         maxTimeoutSeconds: MAX_TIMEOUT_SECONDS,
         authorizationType: AUTHORIZATION_TYPE,
@@ -154,7 +154,7 @@ const testPaymentMiddleware = paymentMiddleware(
 
 // Test endpoint that requires a payment of 1 WLFI USD
 // Only POST method is allowed, x402 middleware applied only to POST
-app.route("/test")
+app.route("/mint")
   .post(testPaymentMiddleware, (_req, res) => {
     res.json({
       success: true,
@@ -169,7 +169,7 @@ app.route("/test")
     res.status(405).json({
       success: false,
       error: "Method Not Allowed",
-      message: "Only POST method is allowed for /test endpoint",
+      message: "Only POST method is allowed for /mint endpoint",
       allowedMethods: ["POST"],
     });
   });
@@ -194,6 +194,6 @@ app.listen(PORT, () => {
   console.log(`\nAvailable Endpoints:`);
   console.log(`  GET  /health       - Health check`);
   console.log(`  GET  /public       - Public endpoint (no payment)`);
-  console.log(`  POST /test         - Protected endpoint (requires payment)`);
+  console.log(`  POST /mint         - Protected endpoint (requires payment)`);
   console.log(`\n${"=".repeat(70)}\n`);
 });
