@@ -135,13 +135,11 @@ const testPaymentMiddleware = paymentMiddleware(
       network: NETWORK,
       config: {
         description: `Official mint! Pay 20 USD1, mint 1 NFTs`,
+        logoUrl: "https://i.ibb.co/qYMBCt66/favicon.png",
         mimeType: "application/json",
         maxTimeoutSeconds: MAX_TIMEOUT_SECONDS,
         authorizationType: AUTHORIZATION_TYPE,
         facilitatorContract: FACILITATOR_CONTRACT,
-         extra: {
-          logoUrl: "https://i.ibb.co/zHQSHH1R/brocks.png",
-        }
       },
     },
   },
