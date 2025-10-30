@@ -152,7 +152,7 @@ const testPaymentMiddleware = paymentMiddleware(
   },
   {
     extra: {
-      logoUrl: "https://i.ibb.co/JR5gpCfx/Green2-1.png",
+      logoUrl: "https://i.ibb.co/qYMBCt66/favicon.png",
     }
   }
 );
