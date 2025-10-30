@@ -135,7 +135,6 @@ const testPaymentMiddleware = paymentMiddleware(
       network: NETWORK,
       config: {
         description: `Official mint! Pay 20 USD1, mint 1 NFTs`,
-        logoUrl: "/favicon.svg",
         mimeType: "application/json",
         maxTimeoutSeconds: MAX_TIMEOUT_SECONDS,
         authorizationType: AUTHORIZATION_TYPE,
@@ -150,6 +149,11 @@ const testPaymentMiddleware = paymentMiddleware(
   {
     appName: "x402Bscan",
     appLogo: "/favicon.svg",
+  },
+  {
+    extra: {
+      logoUrl: "https://i.ibb.co/JR5gpCfx/Green2-1.png",
+    }
   }
 );
 
