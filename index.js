@@ -15,7 +15,8 @@ app.get("/", (_req, res) => {
       <head>
         <title>b402Rocks</title>
           <meta name="description" content="b402Rocks — first b402 NFT collection! Mint on website - https://b402.rocks/, follow us on X - https://x.com/b402Rocks">
-
+<link rel="icon" href="https://i.ibb.co/qYMBCt66/favicon.png" type="image/png">
+  <meta property="og:image" content="https://i.ibb.co/qYMBCt66/favicon.png">
       </head>
       
     </html>
