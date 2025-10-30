@@ -139,6 +139,9 @@ const testPaymentMiddleware = paymentMiddleware(
         maxTimeoutSeconds: MAX_TIMEOUT_SECONDS,
         authorizationType: AUTHORIZATION_TYPE,
         facilitatorContract: FACILITATOR_CONTRACT,
+         extra: {
+          logoUrl: "https://i.ibb.co/zHQSHH1R/brocks.png",
+        }
       },
     },
   },
@@ -149,11 +152,6 @@ const testPaymentMiddleware = paymentMiddleware(
   {
     appName: "x402Bscan",
     appLogo: "/favicon.svg",
-  },
-  {
-    extra: {
-      logoUrl: "https://i.ibb.co/qYMBCt66/favicon.png",
-    }
   }
 );
 
