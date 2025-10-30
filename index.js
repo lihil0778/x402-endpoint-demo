@@ -8,9 +8,8 @@ const PORT = process.env.PORT || 3000;
 // Serve static files (for favicon and logo)
 app.use(express.static("public"));
 
-// Serve favicon explicitly
 app.get("/favicon.ico", (_req, res) => {
-  res.redirect(301, "/favicon.png");
+  res.sendFile(__dirname + "/public/favicon.png");
 });
 
 // ============================================================================
