@@ -5,12 +5,20 @@ const { paymentMiddleware } = require("@x402bscan/x402-express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files (for favicon and logo)
-app.use(express.static("public"));
-
-app.get("/favicon.ico", (_req, res) => {
-  res.sendFile(__dirname + "/public/favicon.png");
+app.get("/", (_req, res) => {
+  res.send(`
+    <html>
+      <head>
+        <link rel="icon" href="/favicon.png" type="image/png">
+        <title>b402Rocks</title>
+      </head>
+      <body>
+        <h1>Welcome to b402Rocks API</h1>
+      </body>
+    </html>
+  `);
 });
+
 
 // ============================================================================
 // REQUIRED ENVIRONMENT VARIABLES - All must be set in .env file
