@@ -10,7 +10,7 @@ app.use(express.static("public"));
 
 // Serve favicon explicitly
 app.get("/favicon.ico", (_req, res) => {
-  res.redirect(301, "/favicon.svg");
+  res.redirect(301, "/favicon.png");
 });
 
 // ============================================================================
