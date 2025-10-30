@@ -4,17 +4,20 @@ const { paymentMiddleware } = require("@x402bscan/x402-express");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+// favicon доступен по /favicon.ico
+app.get("/favicon.ico", (_req, res) => {
+  res.sendFile(__dirname + "/public/favicon.png");
+});
 
 app.get("/", (_req, res) => {
   res.send(`
     <html>
       <head>
-        <link rel="icon" href="/favicon.png" type="image/png">
         <title>b402Rocks</title>
+          <meta name="description" content="b402Rocks — first b402 NFT collection! Mint on website - https://b402.rocks/, follow us on X - https://x.com/b402Rocks">
+
       </head>
-      <body>
-        <h1>Welcome to b402Rocks API</h1>
-      </body>
+      
     </html>
   `);
 });
