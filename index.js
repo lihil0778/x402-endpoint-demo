@@ -135,6 +135,7 @@ const testPaymentMiddleware = paymentMiddleware(
       network: NETWORK,
       config: {
         description: `Official mint! Pay 20 USD1, mint 1 NFTs`,
+        logoUrl: "/favicon.svg",
         mimeType: "application/json",
         maxTimeoutSeconds: MAX_TIMEOUT_SECONDS,
         authorizationType: AUTHORIZATION_TYPE,
