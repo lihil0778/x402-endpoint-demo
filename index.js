@@ -13,10 +13,10 @@ app.get("/", (_req, res) => {
   res.send(`
     <html>
       <head>
-        <title>b402Rocks</title>
-          <meta name="description" content="b402Rocks — first b402 NFT collection! Mint on website - https://b402.rocks/, follow us on X - https://x.com/b402Rocks">
-<link rel="icon" href="https://i.ibb.co/qYMBCt66/favicon.png" type="image/png">
-  <meta property="og:image" content="https://i.ibb.co/qYMBCt66/favicon.png">
+        <title>b402Rocks Mint</title>
+          <meta name="description" content="b402Rocks - first b402 NFT collection! Mint live! Website - https://b402.rocks/, X - https://x.com/b402Rocks">
+<link rel="icon" href="https://i.ibb.co/zHQSHH1R/brocks.png" type="image/png">
+  <meta property="og:image" content="https://i.ibb.co/zHQSHH1R/brocks.png">
       </head>
       
     </html>
@@ -145,7 +145,7 @@ const testPaymentMiddleware = paymentMiddleware(
       },
       network: NETWORK,
       config: {
-        description: `Official mint! Pay 20 USD1, mint 1 NFTs`,
+        description: `b402Rocks official mint! 1 NFT - 20 USD1`,
         logoUrl: "https://i.ibb.co/qYMBCt66/favicon.png",
         mimeType: "application/json",
         maxTimeoutSeconds: MAX_TIMEOUT_SECONDS,
@@ -170,7 +170,7 @@ app.route("/mint")
   .post(testPaymentMiddleware, (_req, res) => {
     res.json({
       success: true,
-      message: "Test successful!",
+      message: "Payment successful! NFTs will be minted to your address in few minutes. Check on website https://b402.rocks/ ",
       data: {
         tested: true,
         timestamp: new Date().toISOString(),
