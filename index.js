@@ -127,13 +127,12 @@ app.all("/health", (req, res) => {
 });
 
 // Configure x402 payment middleware
-// --- Mint #1 ---
-const mint1Middleware = paymentMiddleware(
+const testPaymentMiddleware = paymentMiddleware(
   PAYMENT_ADDRESS,
   {
     "/mint": {
       price: {
-        amount: PAYMENT_AMOUNT, // например "20000000000000000000"
+        amount: PAYMENT_AMOUNT,
         asset: {
           address: TOKEN_ADDRESS,
           decimals: TOKEN_DECIMALS,
@@ -155,84 +154,15 @@ const mint1Middleware = paymentMiddleware(
       },
     },
   },
-  FACILITATOR_CONFIG
-);
-
-// --- Mint #2 ---
-const mint2Middleware = paymentMiddleware(
-  PAYMENT_ADDRESS,
+  // Facilitator configuration
+  // The facilitator verifies and processes payments on the blockchain
+  FACILITATOR_CONFIG,
+  // Paywall configuration (optional)
   {
-    "/mint2": {
-      price: {
-        amount: "40000000000000000000", // 40 USD1
-        asset: {
-          address: TOKEN_ADDRESS,
-          decimals: TOKEN_DECIMALS,
-          symbol: TOKEN_SYMBOL,
-          eip712: {
-            name: TOKEN_NAME,
-            version: TOKEN_VERSION,
-          },
-        },
-      },
-      network: NETWORK,
-      config: {
-        description: `b402Rocks mint #2 — 2 NFTs for 40 USD1`,
-        logoUrl: "https://i.ibb.co/qYMBCt66/favicon.png",
-        mimeType: "application/json",
-        maxTimeoutSeconds: MAX_TIMEOUT_SECONDS,
-        authorizationType: AUTHORIZATION_TYPE,
-        facilitatorContract: FACILITATOR_CONTRACT,
-      },
-    },
-  },
-  FACILITATOR_CONFIG
+    appName: "x402Bscan",
+    appLogo: "/logo.svg",
+  }
 );
-
-// --- Mint #3 ---
-const mint3Middleware = paymentMiddleware(
-  PAYMENT_ADDRESS,
-  {
-    "/mint3": {
-      price: {
-        amount: "60000000000000000000", // 60 USD1
-        asset: {
-          address: TOKEN_ADDRESS,
-          decimals: TOKEN_DECIMALS,
-          symbol: TOKEN_SYMBOL,
-          eip712: {
-            name: TOKEN_NAME,
-            version: TOKEN_VERSION,
-          },
-        },
-      },
-      network: NETWORK,
-      config: {
-        description: `b402Rocks mint #3 — 3 NFTs for 60 USD1`,
-        logoUrl: "https://i.ibb.co/qYMBCt66/favicon.png",
-        mimeType: "application/json",
-        maxTimeoutSeconds: MAX_TIMEOUT_SECONDS,
-        authorizationType: AUTHORIZATION_TYPE,
-        facilitatorContract: FACILITATOR_CONTRACT,
-      },
-    },
-  },
-  FACILITATOR_CONFIG
-);
-
-// --- Routes ---
-app.post("/mint", mint1Middleware, (_req, res) => {
-  res.json({ success: true, message: "Mint #1 complete!" });
-});
-
-app.post("/mint2", mint2Middleware, (_req, res) => {
-  res.json({ success: true, message: "Mint #2 complete!" });
-});
-
-app.post("/mint3", mint3Middleware, (_req, res) => {
-  res.json({ success: true, message: "Mint #3 complete!" });
-});
-
 
 // Test endpoint that requires a payment of 1 WLFI USD
 // Only POST method is allowed, x402 middleware applied only to POST
@@ -255,29 +185,6 @@ app.route("/mint")
       allowedMethods: ["POST"],
     });
   });
-
-app.route("/mint2")
-  .post(testPaymentMiddleware, (_req, res) => {
-    res.json({
-      success: true,
-      message: "Payment successful! NFTs will be minted to your address in few minutes. Check on website https://b402.rocks/ ",
-    });
-  })
-  .all((_req, res) => {
-    res.status(405).json({ error: "Only POST allowed" });
-  });
-
-app.route("/mint3")
-  .post(testPaymentMiddleware, (_req, res) => {
-    res.json({
-      success: true,
-      message: "Payment successful! NFTs will be minted to your address in few minutes. Check on website https://b402.rocks/ ",
-    });
-  })
-  .all((_req, res) => {
-    res.status(405).json({ error: "Only POST allowed" });
-  });
-
 
 // Start the server
 app.listen(PORT, () => {
@@ -302,3 +209,4 @@ app.listen(PORT, () => {
   console.log(`  POST /mint         - Protected endpoint (requires payment)`);
   console.log(`\n${"=".repeat(70)}\n`);
 });
+ 
