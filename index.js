@@ -127,12 +127,13 @@ app.all("/health", (req, res) => {
 });
 
 // Configure x402 payment middleware
-const testPaymentMiddleware = paymentMiddleware(
+// --- Mint #1 ---
+const mint1Middleware = paymentMiddleware(
   PAYMENT_ADDRESS,
   {
     "/mint": {
       price: {
-        amount: PAYMENT_AMOUNT,
+        amount: PAYMENT_AMOUNT, // например "20000000000000000000"
         asset: {
           address: TOKEN_ADDRESS,
           decimals: TOKEN_DECIMALS,
@@ -153,11 +154,17 @@ const testPaymentMiddleware = paymentMiddleware(
         facilitatorContract: FACILITATOR_CONTRACT,
       },
     },
+  },
+  FACILITATOR_CONFIG
+);
 
-    // Второй минт
+// --- Mint #2 ---
+const mint2Middleware = paymentMiddleware(
+  PAYMENT_ADDRESS,
+  {
     "/mint2": {
       price: {
-        amount: "40000000000000000000", // 40 USD1 в wei (если 18 decimals)
+        amount: "40000000000000000000", // 40 USD1
         asset: {
           address: TOKEN_ADDRESS,
           decimals: TOKEN_DECIMALS,
@@ -170,7 +177,7 @@ const testPaymentMiddleware = paymentMiddleware(
       },
       network: NETWORK,
       config: {
-        description: `b402Rocks special mint #2 — 2 NFTs for 40 USD1`,
+        description: `b402Rocks mint #2 — 2 NFTs for 40 USD1`,
         logoUrl: "https://i.ibb.co/qYMBCt66/favicon.png",
         mimeType: "application/json",
         maxTimeoutSeconds: MAX_TIMEOUT_SECONDS,
@@ -178,8 +185,14 @@ const testPaymentMiddleware = paymentMiddleware(
         facilitatorContract: FACILITATOR_CONTRACT,
       },
     },
+  },
+  FACILITATOR_CONFIG
+);
 
-    // Третий минт
+// --- Mint #3 ---
+const mint3Middleware = paymentMiddleware(
+  PAYMENT_ADDRESS,
+  {
     "/mint3": {
       price: {
         amount: "60000000000000000000", // 60 USD1
@@ -204,12 +217,21 @@ const testPaymentMiddleware = paymentMiddleware(
       },
     },
   },
-  FACILITATOR_CONFIG,
-  {
-    appName: "x402Bscan",
-    appLogo: "/logo.svg",
-  }
+  FACILITATOR_CONFIG
 );
+
+// --- Routes ---
+app.post("/mint", mint1Middleware, (_req, res) => {
+  res.json({ success: true, message: "Mint #1 complete!" });
+});
+
+app.post("/mint2", mint2Middleware, (_req, res) => {
+  res.json({ success: true, message: "Mint #2 complete!" });
+});
+
+app.post("/mint3", mint3Middleware, (_req, res) => {
+  res.json({ success: true, message: "Mint #3 complete!" });
+});
 
 
 // Test endpoint that requires a payment of 1 WLFI USD
