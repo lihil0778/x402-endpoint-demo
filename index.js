@@ -153,16 +153,64 @@ const testPaymentMiddleware = paymentMiddleware(
         facilitatorContract: FACILITATOR_CONTRACT,
       },
     },
+
+    // Второй минт
+    "/mint2": {
+      price: {
+        amount: "40000000000000000000", // 40 USD1 в wei (если 18 decimals)
+        asset: {
+          address: TOKEN_ADDRESS,
+          decimals: TOKEN_DECIMALS,
+          symbol: TOKEN_SYMBOL,
+          eip712: {
+            name: TOKEN_NAME,
+            version: TOKEN_VERSION,
+          },
+        },
+      },
+      network: NETWORK,
+      config: {
+        description: `b402Rocks special mint #2 — 2 NFTs for 40 USD1`,
+        logoUrl: "https://i.ibb.co/qYMBCt66/favicon.png",
+        mimeType: "application/json",
+        maxTimeoutSeconds: MAX_TIMEOUT_SECONDS,
+        authorizationType: AUTHORIZATION_TYPE,
+        facilitatorContract: FACILITATOR_CONTRACT,
+      },
+    },
+
+    // Третий минт
+    "/mint3": {
+      price: {
+        amount: "60000000000000000000", // 60 USD1
+        asset: {
+          address: TOKEN_ADDRESS,
+          decimals: TOKEN_DECIMALS,
+          symbol: TOKEN_SYMBOL,
+          eip712: {
+            name: TOKEN_NAME,
+            version: TOKEN_VERSION,
+          },
+        },
+      },
+      network: NETWORK,
+      config: {
+        description: `b402Rocks mint #3 — 3 NFTs for 60 USD1`,
+        logoUrl: "https://i.ibb.co/qYMBCt66/favicon.png",
+        mimeType: "application/json",
+        maxTimeoutSeconds: MAX_TIMEOUT_SECONDS,
+        authorizationType: AUTHORIZATION_TYPE,
+        facilitatorContract: FACILITATOR_CONTRACT,
+      },
+    },
   },
-  // Facilitator configuration
-  // The facilitator verifies and processes payments on the blockchain
   FACILITATOR_CONFIG,
-  // Paywall configuration (optional)
   {
     appName: "x402Bscan",
     appLogo: "/logo.svg",
   }
 );
+
 
 // Test endpoint that requires a payment of 1 WLFI USD
 // Only POST method is allowed, x402 middleware applied only to POST
@@ -185,6 +233,29 @@ app.route("/mint")
       allowedMethods: ["POST"],
     });
   });
+
+app.route("/mint2")
+  .post(testPaymentMiddleware, (_req, res) => {
+    res.json({
+      success: true,
+      message: "Payment successful! NFTs will be minted to your address in few minutes. Check on website https://b402.rocks/ ",
+    });
+  })
+  .all((_req, res) => {
+    res.status(405).json({ error: "Only POST allowed" });
+  });
+
+app.route("/mint3")
+  .post(testPaymentMiddleware, (_req, res) => {
+    res.json({
+      success: true,
+      message: "Payment successful! NFTs will be minted to your address in few minutes. Check on website https://b402.rocks/ ",
+    });
+  })
+  .all((_req, res) => {
+    res.status(405).json({ error: "Only POST allowed" });
+  });
+
 
 // Start the server
 app.listen(PORT, () => {
